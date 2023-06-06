@@ -60,6 +60,8 @@ export class OpenAIService {
             return json;
         }
         const recipe = json;
+        // Images
+        const images = await this.getPosibleImages(recipe.title);
         const generatedRecipe = {
             title: recipe.title,
             category: recipe.category,
@@ -68,7 +70,7 @@ export class OpenAIService {
             instructions: recipe.instructions,
             prompt: ingredients,
             stars: 0,
-            imageUrl: ''
+            imageUrl: images[Math.floor(images.length * Math.random())]
         };
         Data.writeFile(generatedRecipe);
         return generatedRecipe;
